@@ -15,15 +15,30 @@ public abstract class Display
 
         window = new JFrame(title);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        content = new Canvas();
+        content = new Canvas()
+        {
+            public void paint (Graphics graphics)
+            {
+                super.paint(graphics);
+                render(graphics);
+            }
+        };
 
         Dimension size = new Dimension(w, h);
         content.setPreferredSize(size);
+        content.setBackground(Color.black);
 
         window.setResizable(false);
         window.getContentPane().add(content);
         window.pack();
         window.setLocationRelativeTo(null);
         window.setVisible(true);
+    }
+
+    public static void render() { content.repaint(); }
+    private static void render(Graphics graphics)
+    {
+        graphics.setColor(Color.cyan);
+        graphics.fillOval(400 - 50, 300 - 50, 100, 100);
     }
 }
